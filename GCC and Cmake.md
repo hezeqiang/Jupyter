@@ -55,6 +55,7 @@ b.c b.i b.o a.out b.s
 总而言之，gcc在进行预处理时，会将库文件目录（如-I参数传递进来的目录，以及默认的/usr/include，/usr/local/include等目录），与程序源码中#include"xxxx.h"语句的xxxx.h进行组合拼接。 倘若某个组合，得到的路径存在实际的头文件，那么就会将该头文件包含进来。
 
 -l参数
+
 在GCC编译流程的链接阶段，会默认链接标准库，如libc.a，但是对于第三方库，就需要手动添加。 倘若在编译中报出如下的错误： Undefined symbols for architecture x86_64: xxx...xxx ld: symbol(s) not found for architecture x86_64这一般是由未正确指定需要链接的第三方库导致的。
 
 在使用gcc时，一般会选择使用-l参数来指定需要链接的库。 例如，假定我们使用了math库（即#include<math.c>），在进行编译时，便会报出如上的Undefined错误。 这时，我们可以使用-lm（或者-l m）参数来指定需要链接math库。
@@ -64,6 +65,7 @@ b.c b.i b.o a.out b.s
 初看-lm参数，可能会感觉有些诡异。 那么，-l参数具体是如何使用的呢？ -l参数后需要接库名（如m），而不是库文件名（如libm.so）。 但库名和库文件名之间，存在非常直观的联系。 以math库为例，其库文件名是libm.so，而库名是m。 从中很容易看出，库名就是把库文件名的前缀lib和后缀名.so去掉后得到的。 再比如说，LLVM包含的库文件libLLVMCore.a，其对应的库名就是LLVMCore，而链接它的参数为-lLLVMCore。
 
 -L参数
+
 位于/lib，/usr/lib，/usr/local/lib等目录下的库文件，例如libm.so，在使用-l参数后，可以直接被链接。 但如果库文件不在这些目录里，只用-l参数，进行链接时仍会报错，ld: library not found for -lxxx。 这意味着链接程序ld在当前的库文件路径中，无法找到libxxx.so或libxxx.a。
 
 这时，我们需要使用-L参数，将所要链接的库文件所在的路径告诉gcc。 -L参数后需要跟库文件所在的路径。 例如，在macOS下，使用Homebrew包管理器安装llvm，其对应的库文件位于/usr/local/opt/llvm/lib目录。 倘若我们需要使用库LLVMCore，即链接库文件libLLVMCore.a，除了添加-lLLVMCore参数外，还需要使用参数-L/usr/local/opt/llvm/lib，告诉gcc库文件所在的目录。

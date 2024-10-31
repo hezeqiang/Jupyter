@@ -8,5 +8,6 @@
         "latex",
         "plaintext",
         "python"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic"
 }
