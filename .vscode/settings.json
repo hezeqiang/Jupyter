@@ -9,5 +9,15 @@
         "plaintext",
         "python"
     ],
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "background.windowBackgrounds": [
+        "/mnt/hgfs/Desktop/ting \\(5\\).png",
+        "/home/he/Desktop/ting \\(5\\).png"
+    ],
+    "background.backgroundOpacity": [
+        0.94,
+        0.9,
+        0.9,
+        0.9
+    ]
 }
